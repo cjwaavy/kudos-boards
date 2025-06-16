@@ -35,7 +35,19 @@ model Card {
   description String
   gif_url String
   owner String
+  pinned Boolean
+  Comments Comment[]
 
   boardId Int
   board Board @relation(fields: [boardId], references: [id]) // make inherit
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  author String
+  message_body String?
+  gif_url String?
+
+  cardId Int
+  card Card @relation(fields: [cardId], references: [id])
 }
