@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import NavBar from './components/home/NavBar'
+import HomeBoardsContainer from './HomeBoardsContainer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
   return (
     <div>
         <NavBar />
+        <HomeBoardsContainer />
     </div>
   )
 }
