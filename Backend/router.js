@@ -1,31 +1,50 @@
 const express = require('express')
 const { PrismaClient, Category } = require('./generated/prisma')
-const { ValidationError } = require('./errors')
+const { ValidationError, NotFoundError } = require('./errors')
 const router = express.Router()
 
 const prisma = new PrismaClient()
 
-const createCard = async (info) => {
-    const newCard = await prisma.card.create( {data: {
+const createBoard = async (info) => {
+    const newBoard = await prisma.board.create( {data: {
         ...info,
-        category: Category[info.category.toUpperCase()],
-        cards: []
+        category: Category[info.category.toUpperCase()]
     }})
-    return newCard;
+    return newBoard;
 }
-router.get('/', (req, res) => {
-    res.send('Hello World')
+
+const getBoards = async () => {
+    const boards = await prisma.board.findMany()
+    return boards
+}
+router.get('/boards', async (req, res, next) => {
+    try{
+        const boards = await getBoards();
+        if(boards){
+            res.status(200).json(boards).send()
+        }
+        else{
+            throw new NotFoundError("No boards found")
+        }
+    }
+    catch(err){
+        next(err)
+    }
 })
 
-router.post('/card', (req, res, next) => {
-    const { title, category, cover_img, author } = req.body
-    if( title && Object.values(Category).includes(category) && cover_img && author ) {
-        createCard({ title, category, cover_img, author })
-        return res.status(200).send("Success")
-    }
-    else{
-        const error = new ValidationError("Invalid request")
-        next(error)
+router.post('/boards', async (req, res, next) => {
+    try{
+        const { title, category, cover_img, author} = req.body
+        if( title && Object.values(Category).includes(category) && cover_img && author) {
+            console.log("success")
+            const newBoard = await createBoard(req.body)
+            return res.status(200).json(newBoard)
+        }
+        else{
+            throw new ValidationError("Invalid request, missing required fields (title, category, cover_img, author)")
+        }
+    } catch(err){
+        next(err)
     }
 
 })

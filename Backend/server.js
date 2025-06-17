@@ -1,9 +1,9 @@
 //route planning
 const express = require('express')
 const router = require('./router')
+const { PrismaClientKnownRequestError } = require('@prisma/client/runtime/library')
 const app = express()
 const PORT = 8080
-
 
 app.use(express.json())
 
@@ -12,6 +12,7 @@ app.use('/api', router)
 app.use((err, req, res, next) => {
     console.log("in error middle ware")
     if (err instanceof PrismaClientKnownRequestError){
+        console.log("in prisma error")
         if (err.code === 'P2002'){
             return res.status(400).json({ error: "A unique constraint violation occurred." })
         }
