@@ -1,13 +1,16 @@
 //route planning
 const express = require('express')
 const router = require('./router')
+const cors = require('cors')
 const { PrismaClientKnownRequestError } = require('./generated/prisma/runtime/library')
 const { NotFoundError } = require('./errors')
 const app = express()
 const PORT = 8080
 
 app.use(express.json())
-
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 app.use('/api', router)
 
 app.use((err, req, res, next) => {
