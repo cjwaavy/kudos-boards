@@ -20,14 +20,14 @@ const getBoards = async () => {
     return boards
 }
 
-const getBoardById = async (id) => {
-    const board = await prisma.board.findUnique({where: {id: id}})
+const getBoardById = async (boardId) => {
+    const board = await prisma.board.findUnique({where: {id: boardId}})
     return board
 }
 
-const deleteBoard = async (id) => { //prisma client delete can throw its own PrismaClientKnownRequestError which I want to be handled as my custom defined NotFoundError, hence the try catch, so the NotFoundError can be caught by the error handler can be handled in the caller
+const deleteBoard = async (boardId) => { //prisma client delete can throw its own PrismaClientKnownRequestError which I want to be handled as my custom defined NotFoundError, hence the try catch, so the NotFoundError can be caught by the error handler can be handled in the caller
     try {
-        const board = await prisma.board.delete({where:{id: id}})
+        const board = await prisma.board.delete({where:{id: boardId}})
         return board
     } catch(err){
         return null
@@ -35,14 +35,13 @@ const deleteBoard = async (id) => { //prisma client delete can throw its own Pri
 }
 router.post('/boards', async (req, res, next) => {
     try{
-        const { title, category, cover_img, author} = req.body
-        if( title && Object.values(Category).includes(category) && cover_img && author) {
-            console.log("success")
+        const { title, category, coverImg, author} = req.body
+        if( title && Object.values(Category).includes(category) && coverImg && author) {
             const newBoard = await createBoard(req.body)
             return res.status(200).json(newBoard)
         }
         else{
-            throw new ValidationError("Invalid request, missing required fields (title, category, cover_img, author)")
+            throw new ValidationError("Invalid request, missing required fields (title, category, coverImg, author)")
         }
     } catch(err){
         next(err)
@@ -65,63 +64,95 @@ router.get('/boards', async (req, res, next) => {
     }
 })
 
-router.get('/boards/:id', async (req, res, next) => {
+router.get('/boards/:boardId', async (req, res, next) => {
     try {
-        const id = parseInt(req.params.id)
-        if(!Number.isNaN(id)) {
-            const board = await getBoardById(parseInt(id))
+        const boardId = parseInt(req.params.boardId)
+        if(!Number.isNaN(boardId)) {
+            const board = await getBoardById(parseInt(boardId))
             if(board){
                 res.status(200).json(board)
             }
             else{
-                throw new NotFoundError(`Board with id ${id} does not exist`)
+                throw new NotFoundError(`Board with id ${boardId} does not exist`)
             }
         }
-        else if(Number.isNaN(id)){
-            throw new ValidationError("Bad Request, board id must be a number")
+        else if(Number.isNaN(boardId)){
+            throw new ValidationError("Bad Request, boardId must be a number")
         }
         else{
-            throw new ValidationError("Bad Request, missing required fields (id)")
+            throw new ValidationError("Bad Request, missing required fields (boardId)")
         }
     } catch (err) {
         next(err)
     }
 })
 
-router.delete('/boards/:id', async (req, res, next) => {
+router.delete('/boards/:boardId', async (req, res, next) => {
     try{
-        const id = parseInt(req.params.id)
-        if(id && !Number.isNaN(id)) {
-            const board = await deleteBoard(id)
+        const boardId = parseInt(req.params.boardId)
+        if(boardId && !Number.isNaN(boardId)) {
+            const board = await deleteBoard(boardId)
             if(board){
                 return res.status(204).send()
             }
             else{
-                console.log("board: ", board)
-                throw new NotFoundError(`Board with id ${id} does not exist`)
+                throw new NotFoundError(`Board with id ${boardId} does not exist`)
             }
         }
-        else if (id && Number.isNaN(id)){
-            throw new ValidationError("Bad Request, board id must be a number")
+        else if (boardId && Number.isNaN(boardId)){
+            throw new ValidationError("Bad Request, boardId must be a number")
         }
         else{
             throw new ValidationError("Bad Request, missing required fields (id)")
         }
     } catch (err){
-        console.log("Error name:", err.name)
-        console.log(err instanceof PrismaClientKnownRequestError)
         next(err)
     }
 })
 
-// router.post('/boards/:boardId/cards', async (req, res, next) => {
-//     try{
-//         const id = parseInt(req.params.boardId)
-//         if(!Number.i)
-//     } catch (err){
-//         next(err)
-//     }
-// })
+//card routes
 
+const createCard = async (boardId, info) =>  { //prisma client delete can throw its own PrismaClientKnownRequestError which I want to be handled as my custom defined NotFoundError, hence the try catch, so the NotFoundError can be caught by the error handler can be handled in the caller
+    try{
+        const newCard = await prisma.card.create( {data: {
+            ...info,
+            pinned: false,
+            board: {
+                connect: {id: boardId}
+            }
+        }})
+        return newCard;
+    }
+    catch(err){
+        return null;
+    }
+}
+
+router.post('/cards', async (req, res, next) => {
+    try{
+
+        const { title, description, gifUrl, boardId, owner } = req.body
+        if(boardId && Number.isNaN(parseInt(boardId))){
+            throw new ValidationError("Bad Request, boardId must be a number")
+        }
+        else if( title && description && gifUrl && boardId) {
+            const { boardId, ...bodyExcludingBoardId } = req.body // destructuring to remove boardId from body, since using connect: notation in createCard
+            const newCard = await createCard(parseInt(boardId), bodyExcludingBoardId)
+            if(newCard){
+                return res.status(200).json(newCard)
+            }
+            else{
+                throw new NotFoundError(`Cant create card in Board with id ${boardId}, it does not exist`)
+            }
+        }
+        else{
+            throw new ValidationError("Invalid request, missing required fields (title, description, gifUrl, boardId)")
+        }
+    }
+    catch(err){
+        next(err)
+    }
+
+})
 
 module.exports = router
