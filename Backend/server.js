@@ -1,7 +1,8 @@
 //route planning
 const express = require('express')
 const router = require('./router')
-const { PrismaClientKnownRequestError } = require('@prisma/client/runtime/library')
+const { PrismaClientKnownRequestError } = require('./generated/prisma/runtime/library')
+const { NotFoundError } = require('./errors')
 const app = express()
 const PORT = 8080
 

@@ -11,7 +11,7 @@ const SearchBar = () => {
                         Search
                     </p>
                 </button>
-                <button className="h-10 !bg-teal-800">
+                <button className="h-10 !bg-teal-800 dark:!bg-amber-200">
                     <p>
                         Clear
                     </p>
