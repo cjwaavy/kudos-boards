@@ -4,19 +4,22 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import NavBar from './components/home/NavBar'
 import HomeBoardsContainer from './HomeBoardsContainer'
+import { AppContext } from './AppContext'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const [boards, setBoards] = useState()
   // const root = window.document.documentElement
   // root.setAttribute('class', 'dark')
 
   // console.log(root)
   return (
-    <div>
-        <NavBar />
-        <HomeBoardsContainer />
-    </div>
+    <AppContext value={{boards, setBoards}}>
+      <div>
+          <NavBar />
+          <HomeBoardsContainer />
+      </div>
+    </AppContext>
   )
 }
 
