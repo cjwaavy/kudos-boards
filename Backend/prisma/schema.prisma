@@ -34,7 +34,7 @@ model Card {
   title String
   description String
   gif_url String
-  owner String
+  owner String?
   pinned Boolean
   Comments Comment[]
 
