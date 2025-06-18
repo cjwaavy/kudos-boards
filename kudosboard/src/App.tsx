@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,12 +7,14 @@ import HomeBoardsContainer from './HomeBoardsContainer'
 import { AppContext } from './AppContext'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [darkMode, setDarkMode] = useState(false)
   const [boards, setBoards] = useState()
-  // const root = window.document.documentElement
-  // root.setAttribute('class', 'dark')
 
-  // console.log(root)
+  const root = window.document.documentElement
+
+  useEffect(() => {
+    root.setAttribute('class', darkMode ? 'dark' : 'light')
+  }, [darkMode])
   return (
     <AppContext value={{boards, setBoards}}>
       <div>
