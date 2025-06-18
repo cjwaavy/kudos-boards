@@ -17,7 +17,7 @@ model Board {
   id Int @id @default(autoincrement())
   title String
   category Category @default(NONE)
-  cover_img String
+  coverImg String
   author String?
   cards Card[]
 }
@@ -33,10 +33,10 @@ model Card {
   id Int @id @default(autoincrement())
   title String
   description String
-  gif_url String
+  gifUrl String
   owner String?
   pinned Boolean
-  Comments Comment[]
+  comments Comment[]
 
   boardId Int
   board Board @relation(fields: [boardId], references: [id]) // make inherit
@@ -45,8 +45,8 @@ model Card {
 model Comment {
   id Int @id @default(autoincrement())
   author String
-  message_body String?
-  gif_url String?
+  messageBody String?
+  gifUrl String?
 
   cardId Int
   card Card @relation(fields: [cardId], references: [id])
