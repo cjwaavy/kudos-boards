@@ -12,6 +12,7 @@ function App() {
   const [boards, setBoards] = useState()
   const [filter, setFilter] = useState('All')
   const [searchTerm, setSearchTerm] = useState('')
+  const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
 
   const root = window.document.documentElement
 
@@ -21,7 +22,7 @@ function App() {
     root.setAttribute('class', darkMode ? 'dark' : 'light')
   }, [darkMode])
   return (
-    <AppContext value={{ navigate, boards, setBoards, darkMode, setDarkMode, filter, setFilter, searchTerm, setSearchTerm}}>
+    <AppContext value={{ navigate, boards, setBoards, darkMode, setDarkMode, filter, setFilter, searchTerm, setSearchTerm, isBoardModalOpen, setIsBoardModalOpen}}>
       <div>
           <NavBar />
           <HomeBoardsContainer />
