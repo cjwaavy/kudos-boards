@@ -15,4 +15,19 @@ const getBoards = async () => {
     }
 }
 
-export {getBoards}
+const deleteBoard = async (boardId: number) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return true;
+    } catch (err) {
+        console.error("Error deleting board: ", err);
+        return null;
+    }
+};
+
+export { getBoards, deleteBoard };
