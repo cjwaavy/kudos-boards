@@ -3,10 +3,6 @@ import DarkModeToggle from "./DarkModeToggle"
 import SearchArea from "./SearchArea"
 import { AppContext } from "../../AppContext"
 
-interface NavBarProps {
-
-}
-
 const NavBar = () => {
     const { darkMode } = useContext(AppContext)
     return(

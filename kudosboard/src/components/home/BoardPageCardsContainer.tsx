@@ -1,6 +1,6 @@
 const BoardPageCardsContainer = () => {
     return (
-        <div>
+        <div className=''>
 
         </div>
     );
