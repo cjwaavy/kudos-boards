@@ -36,79 +36,68 @@ const deleteBoard = async (boardId) => { //prisma client delete can throw its ow
     }
 }
 router.post('/boards', async (req, res, next) => {
-    try {
-        const { title, category, coverImg, author } = req.body
-        if (title && Object.values(Category).includes(category) && coverImg && author) {
-            const newBoard = await createBoard(req.body)
-            return res.status(200).json(newBoard)
-        }
-        else {
-            throw new ValidationError("Invalid request, missing required fields (title, category, coverImg, author)")
-        }
-    } catch (err) {
-        next(err)
+    const { title, category, coverImg, author } = req.body
+    if (title && Object.values(Category).includes(category) && coverImg && author) {
+        const newBoard = await createBoard(req.body)
+        return res.status(200).json(newBoard)
     }
+    else {
+        next(new ValidationError("Invalid request, missing required fields (title, category, coverImg, author)"))
+    }
+
 })
 
 router.get('/boards', async (req, res, next) => {
-    try {
-        const boards = await getBoards();
-        if (boards) {
-            res.status(200).json(boards).send()
-        }
-        else {
-            throw new NotFoundError("No boards found")
-        }
+
+    const boards = await getBoards();
+    if (boards) {
+        res.status(200).json(boards).send()
     }
-    catch (err) {
-        next(err)
+    else {
+        next(new NotFoundError("No boards found"))
     }
+
 })
 
 router.get('/boards/:boardId', async (req, res, next) => {
-    try {
-        const boardId = parseInt(req.params.boardId)
-        if (!Number.isNaN(boardId)) {
-            const board = await getBoardById(parseInt(boardId))
-            if (board) {
-                res.status(200).json(board)
-            }
-            else {
-                throw new NotFoundError(`Board with id ${boardId} does not exist`)
-            }
-        }
-        else if (Number.isNaN(boardId)) {
-            throw new ValidationError("Bad Request, boardId must be a number")
+
+    const boardId = parseInt(req.params.boardId)
+    if (!Number.isNaN(boardId)) {
+        const board = await getBoardById(parseInt(boardId))
+        if (board) {
+            res.status(200).json(board)
         }
         else {
-            throw new ValidationError("Bad Request, missing required fields (boardId)")
+            next(new NotFoundError(`Board with id ${boardId} does not exist`))
         }
-    } catch (err) {
-        next(err)
+    }
+    else if (Number.isNaN(boardId)) {
+        next(ValidationError("Bad Request, boardId must be a number"))
+    }
+    else {
+        next(ValidationError("Bad Request, missing required fields (boardId)"))
     }
 })
 
 router.delete('/boards/:boardId', async (req, res, next) => {
-    try {
-        const boardId = parseInt(req.params.boardId)
-        if (boardId && !Number.isNaN(boardId)) {
-            const board = await deleteBoard(boardId)
-            if (board) {
-                return res.status(204).send()
-            }
-            else {
-                throw new NotFoundError(`Board with id ${boardId} does not exist`)
-            }
-        }
-        else if (boardId && Number.isNaN(boardId)) {
-            throw new ValidationError("Bad Request, boardId must be a number")
+
+    const boardId = parseInt(req.params.boardId)
+    if (boardId && !Number.isNaN(boardId)) {
+        const board = await deleteBoard(boardId)
+        if (board) {
+            return res.status(204).send()
         }
         else {
-            throw new ValidationError("Bad Request, missing required fields (id)")
+            next(new NotFoundError(`Board with id ${boardId} does not exist`))
         }
-    } catch (err) {
-        next(err)
     }
+    else if (boardId && Number.isNaN(boardId)) {
+        next(new ValidationError("Bad Request, boardId must be a number"))
+    }
+    else {
+        next(new ValidationError("Bad Request, missing required fields (id)"))
+    }
+
 })
 
 //card routes
@@ -131,7 +120,7 @@ const createCard = async (boardId, info) => { //prisma client delete can throw i
     }
 }
 const getCards = async (boardId) => {
-    try{
+    try {
         const board = await prisma.board.findFirst({
             where: { id: boardId },
             include: { cards: true }
@@ -144,35 +133,29 @@ const getCards = async (boardId) => {
 }
 
 router.post('/boards/:boardId/cards', async (req, res, next) => {
-    try {
 
-        const { title, description, gifUrl, owner } = req.body
-        const boardId = parseInt(req.params.boardId)
-        console.log(boardId)
-        if (title && description && gifUrl && boardId) { // destructuring to remove boardId from body, since using connect: notation in createCard
-            const newCard = await createCard(boardId, req.body)
-            if (newCard) {
-                return res.status(200).json(newCard)
-            }
-            else {
-                throw new NotFoundError(`Cant create card in Board with id ${boardId}, it does not exist`)
-            }
-        }
-        else if (Number.isNaN(boardId)) {
-            throw new ValidationError("Bad Request, boardId must be a number")
+    const { title, description, gifUrl, owner } = req.body
+    const boardId = parseInt(req.params.boardId)
+    console.log(boardId)
+    if (title && description && gifUrl && boardId) { // destructuring to remove boardId from body, since using connect: notation in createCard
+        const newCard = await createCard(boardId, req.body)
+        if (newCard) {
+            return res.status(200).json(newCard)
         }
         else {
-            throw new ValidationError("Invalid request, missing required fields (title, description, gifUrl)")
+            next(new NotFoundError(`Cant create card in Board with id ${boardId}, it does not exist`))
         }
     }
-    catch (err) {
-        next(err)
+    else if (Number.isNaN(boardId)) {
+        next(new ValidationError("Bad Request, boardId must be a number"))
+    }
+    else {
+        next(new ValidationError("Invalid request, missing required fields (title, description, gifUrl)"))
     }
 
 })
 
 router.get('/boards/:boardId/cards', async (req, res, next) => {
-    try {
         const boardId = parseInt(req.params.boardId)
         if (boardId && !Number.isNaN(boardId)) {
             const cards = await getCards(boardId)
@@ -180,19 +163,16 @@ router.get('/boards/:boardId/cards', async (req, res, next) => {
                 return res.status(200).json(cards)
             }
             else {
-                throw new NotFoundError(`Board with id ${boardId} does not exist`)
+                next(new NotFoundError(`Board with id ${boardId} does not exist`))
             }
         }
         else if (Number.isNaN(boardId)) {
-            throw new ValidationError("Bad Request, boardId must be a number")
+            next(new ValidationError("Bad Request, boardId must be a number"))
         }
         else {
-            throw new ValidationError("Bad Request, missing required fields (boardId)")
+            next(new ValidationError("Bad Request, missing required fields (boardId)"))
         }
-    }
-    catch (err) {
-        next(err)
-    }
+
 })
 
 
