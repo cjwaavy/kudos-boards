@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react"
+import { use, useContext, useEffect, useState } from "react"
 import { AppContext } from "./AppContext"
 import { getBoards } from "./utils/fetchRequests"
 import BoardItem from "./components/home/BoardItem"
 
 const HomeBoardsContainer = () => {
-    const { boards, setBoards, filter } = useContext(AppContext)
+    const { boards, setBoards, filter, searchTerm} = useContext(AppContext)
 
     const [displayedBoards, setDisplayedBoards] = useState(boards)
 
@@ -17,6 +17,11 @@ const HomeBoardsContainer = () => {
             sorted.sort((boardA, boardB) => boardB.id - boardA.id)  // Assuming 'id' is a proxy for recency
         } else if (filter !== 'All') {
             sorted = sorted.filter(board => board.category === filter.toUpperCase())
+        }
+        if (searchTerm && searchTerm != '') {
+            sorted = sorted.filter(board =>
+                board.title.toLowerCase().includes(searchTerm.toLowerCase())
+            );
         }
 
         setDisplayedBoards(sorted)
@@ -37,6 +42,10 @@ const HomeBoardsContainer = () => {
     useEffect(() => {
         sortBoards()
     }, [filter])
+
+    useEffect(() => {
+        sortBoards()
+    }, [searchTerm])
 
     if (!boards) {
         return (
