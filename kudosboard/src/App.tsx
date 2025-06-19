@@ -5,19 +5,22 @@ import './App.css'
 import NavBar from './components/home/NavBar'
 import HomeBoardsContainer from './HomeBoardsContainer'
 import { AppContext } from './AppContext'
+import { useNavigate } from "react-router";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [boards, setBoards] = useState()
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('All')
 
   const root = window.document.documentElement
+
+  let navigate = useNavigate()
 
   useEffect(() => {
     root.setAttribute('class', darkMode ? 'dark' : 'light')
   }, [darkMode])
   return (
-    <AppContext value={{boards, setBoards, darkMode, setDarkMode, filter, setFilter}}>
+    <AppContext value={{ navigate, boards, setBoards, darkMode, setDarkMode, filter, setFilter}}>
       <div>
           <NavBar />
           <HomeBoardsContainer />
