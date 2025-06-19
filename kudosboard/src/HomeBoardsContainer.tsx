@@ -31,6 +31,7 @@ const HomeBoardsContainer = () => {
 
     useEffect(() => {
         console.log(boards)
+        sortBoards()
     }, [boards])
 
     useEffect(() => {
