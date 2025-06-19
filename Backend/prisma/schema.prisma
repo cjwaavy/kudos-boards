@@ -39,7 +39,7 @@ model Card {
   comments Comment[]
 
   boardId Int
-  board Board @relation(fields: [boardId], references: [id]) // make inherit
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade) // make inherit
 }
 
 model Comment {
