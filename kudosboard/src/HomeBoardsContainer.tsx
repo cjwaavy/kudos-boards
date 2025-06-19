@@ -22,7 +22,7 @@ const HomeBoardsContainer = () => {
         setDisplayedBoards(sorted)
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         getBoards().then((boards) => {
             setBoards(boards)
             setDisplayedBoards(boards)
@@ -37,21 +37,31 @@ const HomeBoardsContainer = () => {
         sortBoards()
     }, [filter])
 
-    if(!boards){
-        return(
+    if (!boards) {
+        return (
             <div>
                 Loading...
             </div>
         )
     }
-    if(displayedBoards.length === 0){
-        return(
+    if (boards.length === 0) {
+        return (
+            <div>
+                <div className="text-center mt-10">
+                    <h1 className="text-2xl font-bold mb-4">Welcome to Kudos Board!</h1>
+                    <p className="text-lg text-gray-600">It looks like there are no boards yet. Start by creating a new board to get started!</p>
+                </div>
+            </div>
+        )
+    }
+    if (displayedBoards.length === 0) {
+        return (
             <div>
                 No boards found
             </div>
         )
     }
-    return(
+    return (
         <div className='flex flex-row flex-wrap justify-around mt-5 gap-5'>
             {displayedBoards.map((board: any) => (
                 <BoardItem key={board.id} board={board} />
