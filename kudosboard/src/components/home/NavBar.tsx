@@ -7,7 +7,7 @@ interface NavBarProps {
 
 }
 
-const NavBar: React.FC<NavBarProps> = () => {
+const NavBar = () => {
     const { darkMode } = useContext(AppContext)
     return(
         <nav className= "relative flex-col items-center justify-center w-full align-top">

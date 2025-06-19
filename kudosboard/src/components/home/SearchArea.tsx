@@ -2,15 +2,13 @@ import { useState } from "react"
 import SearchBar from "./SearchBar"
 import SearchFilters from "./SearchFilters"
 
-interface SearchAreaProps {
-
-}
-const SearchArea: React.FC<SearchAreaProps> = () =>{
+const SearchArea = () =>{
 
     return (
         <div>
             <SearchBar />
             <SearchFilters />
+            <CreateButton />
         </div>
     )
 }
