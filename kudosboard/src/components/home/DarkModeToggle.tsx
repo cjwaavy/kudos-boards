@@ -1,8 +1,10 @@
 import { useContext } from "react"
 import { AppContext } from "../../AppContext"
+import { BoardContext } from "../boards/BoardContext"
 
 const DarkModeToggle = () => {
-  const {darkMode, setDarkMode} = useContext(AppContext)
+
+  const {darkMode, setDarkMode} = useContext(AppContext) ? useContext(AppContext) : useContext(BoardContext)
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode)
   }

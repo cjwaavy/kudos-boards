@@ -56,4 +56,18 @@ const deleteBoard = async (boardId: number) => {
     }
 };
 
-export { getBoards, createBoard, deleteBoard };
+const getCards = async (boardId: number) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}/cards`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error(`Error fetching cards for board ${boardId}: `, err);
+        return null;
+    }
+};
+
+export { getBoards, createBoard, deleteBoard, getCards };
