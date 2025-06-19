@@ -9,6 +9,7 @@ import { AppContext } from './AppContext'
 function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [boards, setBoards] = useState()
+  const [filter, setFilter] = useState('')
 
   const root = window.document.documentElement
 
@@ -16,7 +17,7 @@ function App() {
     root.setAttribute('class', darkMode ? 'dark' : 'light')
   }, [darkMode])
   return (
-    <AppContext value={{boards, setBoards, darkMode, setDarkMode}}>
+    <AppContext value={{boards, setBoards, darkMode, setDarkMode, filter, setFilter}}>
       <div>
           <NavBar />
           <HomeBoardsContainer />
