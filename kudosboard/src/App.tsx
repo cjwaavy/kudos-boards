@@ -16,7 +16,7 @@ function App() {
     root.setAttribute('class', darkMode ? 'dark' : 'light')
   }, [darkMode])
   return (
-    <AppContext value={{boards, setBoards}}>
+    <AppContext value={{boards, setBoards, darkMode, setDarkMode}}>
       <div>
           <NavBar />
           <HomeBoardsContainer />
