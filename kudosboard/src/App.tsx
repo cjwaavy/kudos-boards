@@ -6,13 +6,14 @@ import { AppContext } from './AppContext'
 import { useNavigate } from "react-router";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+  const root = window.document.documentElement
+
+  const [darkMode, setDarkMode] = useState(root.getAttribute('class') === 'dark')
   const [boards, setBoards] = useState()
   const [filter, setFilter] = useState('All')
   const [searchTerm, setSearchTerm] = useState('')
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
 
-  const root = window.document.documentElement
 
   let navigate = useNavigate()
 

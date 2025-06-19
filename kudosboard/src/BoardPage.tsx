@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import { BoardContext } from "./components/boards/BoardContext";
 import BoardPageNavbar from "./components/boards/BoardPageNavbar";
-import DarkModeToggle from "./components/home/DarkModeToggle";
 import { useEffect, useState } from "react";
 import BoardPageCardsContainer from "./components/home/BoardPageCardsContainer";
 
@@ -23,6 +22,7 @@ const BoardPage = () => {
         <BoardContext value={{ navigate, darkMode, setDarkMode }}>
             <BoardPageNavbar />
             <BoardPageCardsContainer />
+
         </BoardContext>
     );
 };
