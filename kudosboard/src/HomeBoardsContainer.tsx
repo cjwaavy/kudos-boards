@@ -1,18 +1,41 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AppContext } from "./AppContext"
-import { getBoards } from "./fetchRequests"
+import { getBoards } from "./utils/fetchRequests"
+import BoardItem from "./components/home/BoardItem"
 
 const HomeBoardsContainer = () => {
-    const { boards, setBoards } = useContext(AppContext)
+    const { boards, setBoards, filter } = useContext(AppContext)
+
+    const [displayedBoards, setDisplayedBoards] = useState(boards)
+
+    const sortBoards = () => {
+        if (!boards) return
+
+        let sorted = [...boards]
+
+        if (filter === 'Recent') {
+            sorted.sort((boardA, boardB) => boardB.id - boardA.id)  // Assuming 'id' is a proxy for recency
+        } else if (filter !== 'All') {
+            sorted = sorted.filter(board => board.category === filter.toUpperCase())
+        }
+
+        setDisplayedBoards(sorted)
+    }
+
     useEffect(() =>{
         getBoards().then((boards) => {
             setBoards(boards)
+            setDisplayedBoards(boards)
         })
     }, [])
 
     useEffect(() => {
         console.log(boards)
     }, [boards])
+
+    useEffect(() => {
+        sortBoards()
+    }, [filter])
 
     if(!boards){
         return(
@@ -21,7 +44,7 @@ const HomeBoardsContainer = () => {
             </div>
         )
     }
-    if(boards.length === 0){
+    if(displayedBoards.length === 0){
         return(
             <div>
                 No boards found
@@ -30,25 +53,9 @@ const HomeBoardsContainer = () => {
     }
     return(
         <div className='flex flex-row flex-wrap justify-around mt-5 gap-5'>
-            {boards.map((board: any) => {
-                return(
-                    <div className=' flex flex-col items-center w-68 p-1 hover:scale-105 transition-transform' key={board.id}>
-                        <img className='overflow-clip w-44 h-80' src={board.coverImg} />
-                        <p className=' py-1 font-bold'>{board.title}</p>
-                        <p>{board.author}</p>
-                        <div className="flex flex-row gap-10 justify-evenly py-1">
-                            <button className='!bg-gray-100 dark:!bg-slate-800 dark:!text-white !text-black underline'>
-                                View Board
-                            </button>
-                            <button className='!bg-teal-800'>
-                                Delete Board
-                            </button>
-                        </div>
-
-
-                    </div>
-                )
-            })}
+            {displayedBoards.map((board: any) => (
+                <BoardItem key={board.id} board={board} />
+            ))}
         </div>
     )
 }
