@@ -3,6 +3,7 @@ import { BoardContext } from "./components/boards/BoardContext";
 import BoardPageNavbar from "./components/boards/BoardPageNavbar";
 import { useEffect, useState } from "react";
 import BoardPageCardsContainer from "./components/home/BoardPageCardsContainer";
+import Footer from "./components/home/Footer";
 
 
 const BoardPage = () => {
@@ -25,9 +26,13 @@ const BoardPage = () => {
 
     return (
         <BoardContext value={{ id, navigate, darkMode, setDarkMode, cards, setCards, isCreateCardModalOpen, setIsCreateCardModalOpen }}>
-            <BoardPageNavbar />
-            <BoardPageCardsContainer />
-
+            <div className="flex flex-col min-h-screen">
+                <BoardPageNavbar />
+                <div className="flex-grow">
+                    <BoardPageCardsContainer />
+                </div>
+                <Footer />
+            </div>
         </BoardContext>
     );
 };

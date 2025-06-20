@@ -11,21 +11,21 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
 
 ##### Home Page
 
-- [ ] **Home Page Display**
-  - [ ] Home page includes the following features:
-    - [ ] Header
-    - [ ] Banner
-    - [ ] Search bar
-    - [ ] List of boards
-    - [ ] Footer
-- [ ] **Display Boards**
-  - [ ] Users can view a list of all boards in a grid view on the home page.
-  - [ ] For each board displayed, users can see:
-    - [ ] An image/gif
-    - [ ] A board title
-- [ ] **Filter Boards**
-  - [ ] Home page includes navigation bar, drop down, or some other mechanism which allows users to filter boards by the following categories:
-    - [ ] All/Home (displays all boards)
+- [x] **Home Page Display**
+  - [x] Home page includes the following features:
+    - [x] Header
+    - [x] Banner
+    - [x] Search bar
+    - [x] List of boards
+    - [x] Footer
+- [x] **Display Boards**
+  - [x] Users can view a list of all boards in a grid view on the home page.
+  - [x] For each board displayed, users can see:
+    - [x] An image/gif
+    - [x] A board title
+- [x] **Filter Boards**
+  - [x] Home page includes navigation bar, drop down, or some other mechanism which allows users to filter boards by the following categories:
+    - [x] All/Home (displays all boards)
     - [ ] Recent (displays the 6 most recently created boards)
     - [ ] Celebration
     - [ ] Thank you
