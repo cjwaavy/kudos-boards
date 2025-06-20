@@ -46,16 +46,26 @@ const CardItem = ({ card }: { card: Card }) => {
     e.stopPropagation();
     const updatedCard = await pinCard(id, parseInt(card.id));
     if (updatedCard) {
+      // Check if the card is being pinned or unpinned
+      const isBeingPinned = updatedCard.pinned && !card.pinned;
+
       // Update the cards array with the updated card
-      const updatedCards = cards.map((c: { id: string; }) =>
-        parseInt(c.id) === parseInt(card.id) ? updatedCard : c
-      );
+      const otherCards = cards.filter((c: { id: string; }) => parseInt(c.id) !== parseInt(card.id));
 
-      // Sort cards to move pinned cards to the front while maintaining their order
-      const pinnedCards = updatedCards.filter((c: { pinned: boolean }) => c.pinned);
-      const unpinnedCards = updatedCards.filter((c: { pinned: boolean }) => !c.pinned);
+      // Get existing pinned and unpinned cards
+      const existingPinnedCards = otherCards.filter((c: { pinned: boolean }) => c.pinned);
+      const unpinnedCards = otherCards.filter((c: { pinned: boolean }) => !c.pinned);
 
-      setCards([...pinnedCards, ...unpinnedCards]);
+      if (isBeingPinned) {
+        // If the card is being pinned, place it at the beginning of the pinned array
+        setCards([updatedCard, ...existingPinnedCards, ...unpinnedCards]);
+      } else if (updatedCard.pinned) {
+        // If the card was already pinned, keep it in the pinned array (at the end)
+        setCards([...existingPinnedCards, updatedCard, ...unpinnedCards]);
+      } else {
+        // If the card is being unpinned, place it with the unpinned cards
+        setCards([...existingPinnedCards, ...unpinnedCards, updatedCard]);
+      }
     } else {
       console.log("Error pinning card");
     }
