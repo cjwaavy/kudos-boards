@@ -82,8 +82,6 @@ const CreateCardModal = ({ isOpen, onClose, onCardCreated }: CreateCardModalProp
 
   const selectGif = (url: string) => {
     setGifUrl(url);
-    // Optionally, you can clear the search results after selection
-    // setGiphyResults([]);
   };
 
   if (!isOpen) return null;

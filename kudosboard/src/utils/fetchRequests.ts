@@ -1,4 +1,3 @@
-// import process from "process"
 const serverUrl = import.meta.env.VITE_API_URL
 
 const getBoards = async () => {
@@ -144,4 +143,27 @@ const getComments = async (boardId: number, cardId: number) => {
     }
 };
 
-export { getBoards, createBoard, deleteBoard, getCards, deleteCard, upvoteCard, createCard, getComments };
+const addComment = async (boardId: number, cardId: number, commentData: {
+    messageBody: string;
+    author?: string | null;
+}) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}/cards/${cardId}/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(commentData),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error(`Error adding comment to card ${cardId}: `, err);
+        return null;
+    }
+};
+
+export { getBoards, createBoard, deleteBoard, getCards, deleteCard, upvoteCard, createCard, getComments, addComment };
