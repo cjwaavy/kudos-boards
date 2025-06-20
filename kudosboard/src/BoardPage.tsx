@@ -12,6 +12,7 @@ const BoardPage = () => {
 
     const [darkMode, setDarkMode] = useState(root.getAttribute('class') === 'dark')
     const [cards, setCards] = useState([]);
+    const [isCreateCardModalOpen, setIsCreateCardModalOpen] = useState(false)
 
     const { id } = useParams();
 
@@ -23,7 +24,7 @@ const BoardPage = () => {
     }, [darkMode])
 
     return (
-        <BoardContext value={{ id, navigate, darkMode, setDarkMode, cards, setCards }}>
+        <BoardContext value={{ id, navigate, darkMode, setDarkMode, cards, setCards, isCreateCardModalOpen, setIsCreateCardModalOpen }}>
             <BoardPageNavbar />
             <BoardPageCardsContainer />
 

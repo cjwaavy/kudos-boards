@@ -1,5 +1,5 @@
 import { useContext } from "react";
-// import { deleteCard, upvoteCard } from "../../utils/fetchRequests"; // Assuming these functions exist
+import { deleteCard, upvoteCard } from "../../utils/fetchRequests"; // Assuming these functions exist
 import { BoardContext } from "../boards/BoardContext";
 
 interface Card {
@@ -11,14 +11,24 @@ interface Card {
 }
 
 const CardItem = ({ card }: { card: Card }) => {
+  const { id, cards, setCards } = useContext(BoardContext);
 
+  const removeCard = () => setCards(cards.filter((c: { id: string }) => parseInt(c.id) !== parseInt(card.id)));
 
   const handleDeleteCard = async () => {
-
+    if (!await deleteCard(id, parseInt(card.id))) {
+      return console.log("Error deleting card");
+    }
+    removeCard();
   };
 
   const handleUpvoteCard = async () => {
-
+    const updatedCard = await upvoteCard(id, parseInt(card.id));
+    if (updatedCard) {
+      setCards(cards.map(c => c.id === card.id ? updatedCard : c));
+    } else {
+      console.log("Error upvoting card");
+    }
   };
 
   return (
