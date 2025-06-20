@@ -1,7 +1,6 @@
 const express = require('express')
 const { PrismaClient, Category } = require('./generated/prisma')
 const { ValidationError, NotFoundError } = require('./errors')
-const { PrismaClientKnownRequestError } = require('./generated/prisma/runtime/library')
 
 const router = express.Router()
 
@@ -116,6 +115,7 @@ const createCard = async (boardId, info) => { //prisma client delete can throw i
         return newCard;
     }
     catch (err) {
+        console.log(err)
         return null;
     }
 }

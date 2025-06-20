@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { BoardContext } from "./components/boards/BoardContext";
 import BoardPageNavbar from "./components/boards/BoardPageNavbar";
 import { useEffect, useState } from "react";
@@ -11,15 +11,19 @@ const BoardPage = () => {
     const root = window.document.documentElement
 
     const [darkMode, setDarkMode] = useState(root.getAttribute('class') === 'dark')
+    const [cards, setCards] = useState([]);
+
+    const { id } = useParams();
 
     useEffect(() => {
         console.log(root)
+        console.log("id: ", id)
         console.log("darkmode starts as: ", darkMode)
         root.setAttribute('class', darkMode ? 'dark' : 'light')
     }, [darkMode])
 
     return (
-        <BoardContext value={{ navigate, darkMode, setDarkMode }}>
+        <BoardContext value={{ id, navigate, darkMode, setDarkMode, cards, setCards }}>
             <BoardPageNavbar />
             <BoardPageCardsContainer />
 
