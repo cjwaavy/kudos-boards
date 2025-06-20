@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { deleteBoard } from "../../utils/fetchRequests";
 import { AppContext } from "../../AppContext";
 

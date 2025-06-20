@@ -28,7 +28,7 @@ const CardItem = ({ card }: { card: Card }) => {
 
   const handleDeleteCard = async () => {
     if (!await deleteCard(id, parseInt(card.id))) {
-      return console.log("Error deleting card");
+      return ;
     }
     removeCard();
   };
@@ -38,7 +38,6 @@ const CardItem = ({ card }: { card: Card }) => {
     if (updatedCard) {
       setCards(cards.map((c: { id: string; }) => parseInt(c.id) === parseInt(card.id) ? updatedCard : c));
     } else {
-      console.log("Error upvoting card");
     }
   };
 
@@ -67,7 +66,7 @@ const CardItem = ({ card }: { card: Card }) => {
         setCards([...existingPinnedCards, ...unpinnedCards, updatedCard]);
       }
     } else {
-      console.log("Error pinning card");
+      return ;
     }
   };
 

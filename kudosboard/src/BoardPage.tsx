@@ -18,9 +18,6 @@ const BoardPage = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        console.log(root)
-        console.log("id: ", id)
-        console.log("darkmode starts as: ", darkMode)
         root.setAttribute('class', darkMode ? 'dark' : 'light')
     }, [darkMode])
 

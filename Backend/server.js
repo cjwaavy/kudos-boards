@@ -13,10 +13,7 @@ app.use(cors({
 app.use('/api', router)
 
 app.use((err, req, res, next) => {
-    console.log("in error middle ware")
-    console.log(err)
     if (err instanceof PrismaClientKnownRequestError){
-        console.log("in prisma error")
         if (err.code === 'P2002'){
             return res.status(400).json({ error: "A unique constraint violation occurred." })
         }

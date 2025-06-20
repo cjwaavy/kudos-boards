@@ -30,8 +30,6 @@ const HomeCardsContainer = () => {
             const unpinnedCards = cards.filter((card: any) => !card.pinned);
             const sortedCards = [...pinnedCards, ...unpinnedCards];
             setDisplayedCards(sortedCards);
-            console.log("cards:", cards)
-            console.log("displayedCards:", sortedCards)
         }
     }, [cards]);
 

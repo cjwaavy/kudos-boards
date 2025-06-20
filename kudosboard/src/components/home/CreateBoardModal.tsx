@@ -129,14 +129,14 @@ const CreateBoardModal = ({ isOpen, onClose, onBoardCreated }: CreateBoardModalP
             <button
               type="button"
               onClick={onClose}
-              className="!bg-teal-600 mr-2 px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+              className="!bg-teal-600 mr-2 px-4 py-2 text-gray-700rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
               disabled={isLoading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="!bg-teal-600 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50"
+              className="!bg-teal-600 px-4 py-2 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50"
               disabled={isLoading}
             >
               {isLoading ? 'Creating...' : 'Create Board'}
