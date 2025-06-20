@@ -1,8 +1,8 @@
-import { use, useContext } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../AppContext";
 
 const SearchFilters = () => {
-    const { filter, setFilter } = useContext(AppContext);
+    const { setFilter } = useContext(AppContext);
     return (
         <div className="flex gap-1 justify-center m-1 mb-2">
             <button className="!bg-gray-300 !text-black" onClick={() => setFilter('All')}>
