@@ -12,15 +12,27 @@ const HomeCardsContainer = () => {
 
     useEffect(() => {
         getCards(id).then((data) => {
-            setCards(data);
-            setDisplayedCards(cards);
+            // Sort cards to move pinned cards to the front
+            if (data) {
+                const pinnedCards = data.filter((card: any) => card.pinned);
+                const unpinnedCards = data.filter((card: any) => !card.pinned);
+                const sortedCards = [...pinnedCards, ...unpinnedCards];
+                setCards(sortedCards);
+                setDisplayedCards(sortedCards);
+            }
         });
     }, []);
 
     useEffect(() => {
-        setDisplayedCards(cards);
-        console.log("cards:", cards)
-        console.log("displayedCards:", displayedCards)
+        // Sort cards to move pinned cards to the front
+        if (cards) {
+            const pinnedCards = cards.filter((card: any) => card.pinned);
+            const unpinnedCards = cards.filter((card: any) => !card.pinned);
+            const sortedCards = [...pinnedCards, ...unpinnedCards];
+            setDisplayedCards(sortedCards);
+            console.log("cards:", cards)
+            console.log("displayedCards:", sortedCards)
+        }
     }, [cards]);
 
     if (!cards) {
