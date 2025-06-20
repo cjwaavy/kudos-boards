@@ -126,11 +126,11 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
     - [x] The card's pin status (e.g., a pin icon or highlight)  is removed.
     - [x] The unpin action is saved so that the card remains unpinned after page refresh.
   - [x] Pinned cards always appear at the top of the board, above unpinned cards.
-  - [ ] If multiple cards are pinned, they maintain their pinned order based on the time they were pinned.
-    - [ ] More recent pins should appear first.
-- [ ] The pinned state of a card persists when:
-  - [ ] navigating away from and back to the board.
-  - [ ] refreshing the page.
+  - [x] If multiple cards are pinned, they maintain their pinned order based on the time they were pinned.
+    - [x] More recent pins should appear first.
+- [x] The pinned state of a card persists when:
+  - [x] navigating away from and back to the board.
+  - [x] refreshing the page.
 
 
 
@@ -144,6 +144,8 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
+Pretty much everything: routes, db setup, best practices, all that.
+
 Add your response here
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
@@ -152,12 +154,15 @@ Add your response here
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-Add your response here
+I think it would be cool if i added  search feature on the board page
 
 ### Open-source libraries used
 
 - Add any links to open-source libraries used in your project.
 
+GIPHY
 ### Shout out
 
 Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
+
+As always Terrnace, Joeseph, Noble , Chioma, Ana, Mark, Caleb, Braden, Noah, chelsea, Stacey
