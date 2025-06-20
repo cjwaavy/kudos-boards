@@ -8,7 +8,7 @@ const PORT = 8080
 
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: "https://kudos-boards-1.onrender.com/"
 }))
 app.use('/api', router)
 
