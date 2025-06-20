@@ -13,7 +13,7 @@ const createBoard = async (info) => {
             category: Category[info.category.toUpperCase()]
         }
     })
-    return newBoard;
+    return newBoard
 }
 
 const getBoards = async () => {
@@ -48,7 +48,7 @@ router.post('/boards', async (req, res, next) => {
 
 router.get('/boards', async (req, res, next) => {
 
-    const boards = await getBoards();
+    const boards = await getBoards()
     if (boards) {
         res.status(200).json(boards).send()
     }
@@ -112,11 +112,11 @@ const createCard = async (boardId, info) => { //prisma client delete can throw i
                 }
             }
         })
-        return newCard;
+        return newCard
     }
     catch (err) {
         console.log(err)
-        return null;
+        return null
     }
 }
 const getCards = async (boardId) => {
@@ -128,16 +128,16 @@ const getCards = async (boardId) => {
         return board.cards
     }
     catch (err) {
-        return null;
+        return null
     }
 }
 const deleteCard = async (cardId) => {
     try {
-        const card = await prisma.card.delete({ where: { id: cardId } });
-        return card;
+        const card = await prisma.card.delete({ where: { id: cardId } })
+        return card
     } catch (err) {
-        console.error(`Error deleting card with id ${cardId}:`, err);
-        return null;
+        console.error(`Error deleting card with id ${cardId}:`, err)
+        return null
     }
 }
 const upvoteCard = async (cardId) => {
@@ -149,13 +149,42 @@ const upvoteCard = async (cardId) => {
                     increment: 1
                 }
             }
-        });
-        return card;
+        })
+        return card
     } catch (err) {
-        console.error(`Error upvoting card with id ${cardId}:`, err);
-        return null;
+        console.error(`Error upvoting card with id ${cardId}:`, err)
+        return null
     }
-};
+}
+const getComments = async (cardId) => {
+    try {
+        const card = await prisma.card.findUnique({
+            where: { id: cardId },
+            include: { comments: true }
+        })
+        return card ? card.comments : null
+    } catch (err) {
+        console.error(`Error fetching comments for card with id ${cardId}:`, err)
+        return null
+    }
+}
+
+const addComment = async (cardId, info) => {
+    try {
+        const newComment = await prisma.comment.create({
+            data: {
+                ...info,
+                card: {
+                    connect: { id: cardId }
+                }
+            }
+        })
+        return newComment
+    } catch (err) {
+        console.error(`Error adding comment to card with id ${cardId}:`, err)
+        return null
+    }
+}
 
 
 router.post('/boards/:boardId/cards', async (req, res, next) => {
@@ -202,33 +231,64 @@ router.get('/boards/:boardId/cards', async (req, res, next) => {
 })
 
 router.delete('/boards/:boardId/cards/:cardId', async (req, res, next) => {
-    const cardId = parseInt(req.params.cardId);
+    const cardId = parseInt(req.params.cardId)
     if (!Number.isNaN(cardId)) {
-        const card = await deleteCard(cardId);
+        const card = await deleteCard(cardId)
         if (card) {
-            return res.status(204).send();
+            return res.status(204).send()
         } else {
-            next(new NotFoundError(`Card with id ${cardId} does not exist`));
+            next(new NotFoundError(`Card with id ${cardId} does not exist`))
         }
     } else {
-        next(new ValidationError("Bad Request, cardId must be a number"));
+        next(new ValidationError("Bad Request, cardId must be a number"))
     }
-});
+})
 
 router.patch('/boards/:boardId/cards/:cardId/upvote', async (req, res, next) => {
-    const cardId = parseInt(req.params.cardId);
+    const cardId = parseInt(req.params.cardId)
     if (!Number.isNaN(cardId)) {
-        const card = await upvoteCard(cardId);
+        const card = await upvoteCard(cardId)
         if (card) {
-            return res.status(200).json(card);
+            return res.status(200).json(card)
         } else {
-            next(new NotFoundError(`Card with id ${cardId} does not exist`));
+            next(new NotFoundError(`Card with id ${cardId} does not exist`))
         }
     } else {
-        next(new ValidationError("Bad Request, cardId must be a number"));
+        next(new ValidationError("Bad Request, cardId must be a number"))
     }
-});
+})
 
+router.get('/boards/:boardId/cards/:cardId/comments', async (req, res, next) => {
+    const cardId = parseInt(req.params.cardId)
+    if (!Number.isNaN(cardId)) {
+        const comments = await getComments(cardId)
+        if (comments) {
+            return res.status(200).json(comments)
+        } else {
+            next(new NotFoundError(`Card with id ${cardId} does not exist or has no comments`))
+        }
+    } else {
+        next(new ValidationError("Bad Request, cardId must be a number"))
+    }
+})
+
+router.post('/boards/:boardId/cards/:cardId/comments', async (req, res, next) => {
+    const cardId = parseInt(req.params.cardId)
+    const { messageBody } = req.body
+    if (!Number.isNaN(cardId) && messageBody) {
+        const newComment = await addComment(cardId, req.body)
+        if (newComment) {
+            console.log("cardId: ", cardId)
+            return res.status(201).json(newComment)
+        } else {
+            next(new NotFoundError(`Card with id ${cardId} does not exist`))
+        }
+    } else if (Number.isNaN(cardId)) {
+        next(new ValidationError("Bad Request, cardId must be a number"))
+    } else {
+        next(new ValidationError("Invalid request, missing required field: messageBody; author is Optional"))
+    }
+})
 
 
 module.exports = router
