@@ -18,8 +18,6 @@ const CreateCardModal = ({ isOpen, onClose, onCardCreated }: CreateCardModalProp
   const [giphyResults, setGiphyResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const GIPHY_API_KEY = 'XH8iudqXW4rJkPOVnDERSWQVuRJ0Z5qp';
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -63,7 +61,7 @@ const CreateCardModal = ({ isOpen, onClose, onCardCreated }: CreateCardModalProp
     setIsSearching(true);
     try {
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${encodeURIComponent(
+        `https://api.giphy.com/v1/gifs/search?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${encodeURIComponent(
           searchTerm
         )}&limit=8&rating=g`
       );

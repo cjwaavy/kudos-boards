@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { BoardContext } from "./components/boards/BoardContext";
 
-
 const CreateCardButton = () => {
     const {setIsCreateCardModalOpen} = useContext(BoardContext)
 
