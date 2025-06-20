@@ -16,7 +16,7 @@ const HomeBoardsContainer = () => {
         let sorted = [...boards]
 
         if (filter === 'Recent') {
-            sorted.sort((boardA, boardB) => boardB.id - boardA.id)
+            sorted = sorted.slice(Math.max(0, sorted.length - 6))
         } else if (filter !== 'All') {
             sorted = sorted.filter(board => board.category === filter.toUpperCase())
         }

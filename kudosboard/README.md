@@ -26,94 +26,94 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
 - [x] **Filter Boards**
   - [x] Home page includes navigation bar, drop down, or some other mechanism which allows users to filter boards by the following categories:
     - [x] All/Home (displays all boards)
-    - [ ] Recent (displays the 6 most recently created boards)
-    - [ ] Celebration
-    - [ ] Thank you
-    - [ ] Inspiration
-  - [ ] When a category is clicked, boards matching the specified category are displayed.
-- [ ] **Search Functionality**
-  - [ ] Users can use a search bar to search for boards by title on the home page.
-  - [ ] The search bar should include:
-    - [ ] Text input field
-    - [ ] Submit/Search Button
-    - [ ] Clear Mechanism
-  - [ ] Boards with a title containing the search query in the text input field are displayed in a grid view when the user:
-    - [ ] Presses the Enter key
-    - [ ] Clicks the Submit/Search button
-  - [ ] User can delete all text from the text input field.
-  - [ ] When all text is cleared from the text input field, all boards are displayed in a grid view
-- [ ] **View Board**
-  - [ ] Users can click on a board in the grid view to navigate to a new page containing that board's details.
-- [ ] **Add New Board**
-  - [ ] Users can create a new board on the home page.
-  - [ ] When creating a new board, users can specify the:
-    - [ ] Title (required)
-    - [ ] Category (required)
-    - [ ] Author (optional)
-  - [ ] Items listed as required above must have a value to succesffuly create a new board.
-  - [ ] When the board is successfully created, it appears in the grid of boards.
-- [ ] **Delete Board**
-  - [ ] User can delete boards on the home page.
-  - [ ] When the board is deleted, the board disappears from the grid of boards.
+    - [x] Recent (displays the 6 most recently created boards)
+    - [x] Celebration
+    - [x] Thank you
+    - [x] Inspiration
+  - [x] When a category is clicked, boards matching the specified category are displayed.
+- [x] **Search Functionality**
+  - [x] Users can use a search bar to search for boards by title on the home page.
+  - [x] The search bar should include:
+    - [x] Text input field
+    - [x] Submit/Search Button
+    - [x] Clear Mechanism
+  - [x] Boards with a title containing the search query in the text input field are displayed in a grid view when the user:
+    - [x] Presses the Enter key
+    - [x] Clicks the Submit/Search button
+  - [x] User can delete all text from the text input field.
+  - [x] When all text is cleared from the text input field, all boards are displayed in a grid view
+- [x] **View Board**
+  - [x] Users can click on a board in the grid view to navigate to a new page containing that board's details.
+- [x] **Add New Board**
+  - [x] Users can create a new board on the home page.
+  - [x] When creating a new board, users can specify the:
+    - [x] Title (required)
+    - [x] Category (required)
+    - [x] Author (optional)
+  - [x] Items listed as required above must have a value to succesffuly create a new board.
+  - [x] When the board is successfully created, it appears in the grid of boards.
+- [x] **Delete Board**
+  - [x] User can delete boards on the home page.
+  - [x] When the board is deleted, the board disappears from the grid of boards.
 
 ##### Board Page
 
-- [ ] **Display Cards**
-  - [ ] For a given board, the board's page displays a list of all cards for that board in a grid view.
-  - [ ] For each card should displayed, users can see the card's:
-    - [ ] Message
-    - [ ] Gif
-    - [ ] Number of upvotes
-    - [ ] Delete button
-- [ ] **Add New Card**
-  - [ ] Users can make a new card associated with the current board.
-  - [ ] To successfully create a new card, users must specify the following:
-    - [ ] Text message (required).
-    - [ ] A gif users can search for and select within the form using the [GIPHY API](https://developers.giphy.com/docs/api/) (required).
-  - [ ] Users are given the option to specify the author of the card.
-  - [ ] When the new card is successfully created, it appears in the grid of cards.
-- [ ] **Upvote Card**
-  - [ ] Users can upvote a card.
-  - [ ] Update the vote count on the card tile when a user clicks the upvote icon.
-  - [ ] When the upvote icon is clicked the upvote count increases by 1.
-  - [ ] A user can upvote a card multiple times.
-- [ ] **Delete Card**
-  - [ ] Users can delete cards.
-  - [ ] When the user clicks the delete button for a card, the card disappears from the grid of cards.
-- [ ] **Deployment**
+- [x] **Display Cards**
+  - [x] For a given board, the board's page displays a list of all cards for that board in a grid view.
+  - [x] For each card should displayed, users can see the card's:
+    - [x] Message
+    - [x] Gif
+    - [x] Number of upvotes
+    - [x] Delete button
+- [x] **Add New Card**
+  - [x] Users can make a new card associated with the current board.
+  - [x] To successfully create a new card, users must specify the following:
+    - [x] Text message (required).
+    - [x] A gif users can search for and select within the form using the [GIPHY API](https://developers.giphy.com/docs/api/) (required).
+  - [x] Users are given the option to specify the author of the card.
+  - [x] When the new card is successfully created, it appears in the grid of cards.
+- [x] **Upvote Card**
+  - [x] Users can upvote a card.
+  - [x] Update the vote count on the card tile when a user clicks the upvote icon.
+  - [x] When the upvote icon is clicked the upvote count increases by 1.
+  - [x] A user can upvote a card multiple times.
+- [x] **Delete Card**
+  - [x] Users can delete cards.
+  - [x] When the user clicks the delete button for a card, the card disappears from the grid of cards.
+- [x] **Deployment**
   - [ ] Website is deployed via Render.
   - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: For ease of grading, please use the deployed version of your website when creating your walkthrough.
 
 ####  Stretch Features
 
-- [ ] **Comments**
-  - [ ] Users can add comments to cards.
-  - [ ] To successfully add a comment, users must specify a text message body.
-  - [ ] Users are given the option to specify the author of the comment.
-  - [ ] Users can view comments on card in a pop-up modal that displays the card's:
-    - [ ] Text message
-    - [ ] Gif
-    - [ ] Author (if specified)
-    - [ ] A list of the card's comments and each comment's:
-      - [ ] Message body
-      - [ ] Author (if specified)
-  - [ ] Users can add multiple comments to a single card.
-- [ ] **Dark Mode**
-  - [ ] Users can toggle between light mode and dark mode using a button displayed on the:
-    - [ ] Home Page
-    - [ ] Board Pages
-  - [ ] When the button is clicked, the color theme switches to the opposite of the current mode.
-  - [ ] When dark mode is enabled:
-    - [ ] Text and icons use a light color
-    - [ ] The background uses a dark color
-    - [ ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
-  - [ ] When light mode is enabled:
-    - [ ] Text and icons use a dark color
-    - [ ] The background uses a light color
-    - [ ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
-  - [ ] The chosen mode (light or dark) persists when navigating from home page to board pages and vice versa.
-  - [ ] When the user first visits the site the theme defaults to light mode.
-  - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast in both light and dark mode. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it.
+- [x] **Comments**
+  - [x] Users can add comments to cards.
+  - [x] To successfully add a comment, users must specify a text message body.
+  - [x] Users are given the option to specify the author of the comment.
+  - [x] Users can view comments on card in a pop-up modal that displays the card's:
+    - [x] Text message
+    - [x] Gif
+    - [x] Author (if specified)
+    - [x] A list of the card's comments and each comment's:
+      - [x] Message body
+      - [x] Author (if specified)
+  - [x] Users can add multiple comments to a single card.
+- [x] **Dark Mode**
+  - [x] Users can toggle between light mode and dark mode using a button displayed on the:
+    - [x] Home Page
+    - [x] Board Pages
+  - [x] When the button is clicked, the color theme switches to the opposite of the current mode.
+  - [x] When dark mode is enabled:
+    - [x] Text and icons use a light color
+    - [x] The background uses a dark color
+    - [x] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
+  - [x] When light mode is enabled:
+    - [x] Text and icons use a dark color
+    - [x] The background uses a light color
+    - [x] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
+  - [x] The chosen mode (light or dark) persists when navigating from home page to board pages and vice versa.
+  - [x] When the user first visits the site the theme defaults to light mode.
+  - [x] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast in both light and dark mode. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it.
 - [ ] **Pinned Cards**
   - [ ] Users can pin a card to the top of the board.
   - [ ] A Pin button is displayed on each card.
