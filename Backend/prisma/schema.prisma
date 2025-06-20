@@ -45,9 +45,8 @@ model Card {
 
 model Comment {
   id Int @id @default(autoincrement())
-  author String
-  messageBody String?
-  gifUrl String?
+  author String?
+  messageBody String
 
   cardId Int
   card Card @relation(fields: [cardId], references: [id])
