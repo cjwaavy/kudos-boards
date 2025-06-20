@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
-import { getBoards, createBoard } from "./utils/fetchRequests";
+import { getBoards } from "./utils/fetchRequests";
 import BoardItem from "./components/home/BoardItem";
 import CreateButton from "./components/home/CreateButton";
 import CreateBoardModal from "./components/home/CreateBoardModal";

@@ -115,7 +115,7 @@ const createCard = async (boardId, info) => { //prisma client delete can throw i
         return newCard
     }
     catch (err) {
-        console.log(err)
+        (err)
         return null
     }
 }
@@ -214,7 +214,6 @@ router.post('/boards/:boardId/cards', async (req, res, next) => {
 
     const { title, description, gifUrl, owner } = req.body
     const boardId = parseInt(req.params.boardId)
-    console.log(boardId)
     if (title && description && gifUrl && boardId) { // destructuring to remove boardId from body, since using connect: notation in createCard
         const newCard = await createCard(boardId, req.body)
         if (newCard) {
@@ -315,7 +314,7 @@ router.post('/boards/:boardId/cards/:cardId/comments', async (req, res, next) =>
     if (!Number.isNaN(cardId) && messageBody) {
         const newComment = await addComment(cardId, req.body)
         if (newComment) {
-            console.log("cardId: ", cardId)
+            ("cardId: ", cardId)
             return res.status(201).json(newComment)
         } else {
             next(new NotFoundError(`Card with id ${cardId} does not exist`))
