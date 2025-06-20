@@ -8,7 +8,7 @@ const PORT = 8080
 
 app.use(express.json())
 app.use(cors({
-    origin: "https://kudos-boards-1.onrender.com/"
+    origin: "https://kudos-boards-1.onrender.com"
 }))
 app.use('/api', router)
 
