@@ -131,6 +131,32 @@ const getCards = async (boardId) => {
         return null;
     }
 }
+const deleteCard = async (cardId) => {
+    try {
+        const card = await prisma.card.delete({ where: { id: cardId } });
+        return card;
+    } catch (err) {
+        console.error(`Error deleting card with id ${cardId}:`, err);
+        return null;
+    }
+}
+const upvoteCard = async (cardId) => {
+    try {
+        const card = await prisma.card.update({
+            where: { id: cardId },
+            data: {
+                upvotes: {
+                    increment: 1
+                }
+            }
+        });
+        return card;
+    } catch (err) {
+        console.error(`Error upvoting card with id ${cardId}:`, err);
+        return null;
+    }
+};
+
 
 router.post('/boards/:boardId/cards', async (req, res, next) => {
 
@@ -165,7 +191,7 @@ router.get('/boards/:boardId/cards', async (req, res, next) => {
             else {
                 next(new NotFoundError(`Board with id ${boardId} does not exist`))
             }
-        }
+    }
         else if (Number.isNaN(boardId)) {
             next(new ValidationError("Bad Request, boardId must be a number"))
         }
@@ -174,6 +200,35 @@ router.get('/boards/:boardId/cards', async (req, res, next) => {
         }
 
 })
+
+router.delete('/boards/:boardId/cards/:cardId', async (req, res, next) => {
+    const cardId = parseInt(req.params.cardId);
+    if (!Number.isNaN(cardId)) {
+        const card = await deleteCard(cardId);
+        if (card) {
+            return res.status(204).send();
+        } else {
+            next(new NotFoundError(`Card with id ${cardId} does not exist`));
+        }
+    } else {
+        next(new ValidationError("Bad Request, cardId must be a number"));
+    }
+});
+
+router.patch('/boards/:boardId/cards/:cardId/upvote', async (req, res, next) => {
+    const cardId = parseInt(req.params.cardId);
+    if (!Number.isNaN(cardId)) {
+        const card = await upvoteCard(cardId);
+        if (card) {
+            return res.status(200).json(card);
+        } else {
+            next(new NotFoundError(`Card with id ${cardId} does not exist`));
+        }
+    } else {
+        next(new ValidationError("Bad Request, cardId must be a number"));
+    }
+});
+
 
 
 module.exports = router

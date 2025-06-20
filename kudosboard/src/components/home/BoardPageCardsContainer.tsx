@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { getCards } from "../../utils/fetchRequests";
 import CardItem from "../../components/home/CardItem";
 import { BoardContext } from "../boards/BoardContext";
+import CreateCardButton from "../../CreateCardButton";
+import CreateCardModal from "../boards/CreateCardModal";
 
 const HomeCardsContainer = () => {
-    const { cards, setCards, id } = useContext(BoardContext);
+    const { cards, setCards, id, isCreateCardModalOpen, setIsCreateCardModalOpen } = useContext(BoardContext);
 
     const [displayedCards, setDisplayedCards] = useState(cards);
 
@@ -40,13 +42,13 @@ const HomeCardsContainer = () => {
                 <div className="text-center mt-10">
                     <h1 className="text-2xl font-bold mb-4">Welcome to Kudos Cards!</h1>
                     <p className="text-lg text-gray-600 mb-8">It looks like there are no cards yet. Start by creating a new card to get started!</p>
-                    {/* <CreateCardButton /> */}
+                    <CreateCardButton/>
                 </div>
-                {/* <CreateCardModal
-                    isOpen={isCardModalOpen}
-                    onClose={() => setIsCardModalOpen(false)}
+                <CreateCardModal
+                    isOpen={isCreateCardModalOpen}
+                    onClose={() => setIsCreateCardModalOpen(false)}
                     onCardCreated={handleCardCreated}
-                /> */}
+                />
             </div>
         );
     }
@@ -62,7 +64,7 @@ const HomeCardsContainer = () => {
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Kudos Cards</h1>
+                <h1 className="text-2xl font-bold">Cards</h1>
             </div>
 
             <div className='flex flex-row flex-wrap justify-around gap-5'>
@@ -71,11 +73,11 @@ const HomeCardsContainer = () => {
                 ))}
             </div>
 
-            {/* <CreateCardModal
-                isOpen={isCardModalOpen}
-                onClose={() => setIsCardModalOpen(false)}
+            <CreateCardModal
+                isOpen={isCreateCardModalOpen}
+                onClose={() => setIsCreateCardModalOpen(false)}
                 onCardCreated={handleCardCreated}
-            /> */}
+            />
         </div>
     );
 };

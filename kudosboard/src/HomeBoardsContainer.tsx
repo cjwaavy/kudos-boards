@@ -6,10 +6,9 @@ import CreateButton from "./components/home/CreateButton";
 import CreateBoardModal from "./components/home/CreateBoardModal";
 
 const HomeBoardsContainer = () => {
-    const { boards, setBoards, filter, searchTerm } = useContext(AppContext);
+    const { boards, setBoards, filter, searchTerm, isBoardModalOpen, setIsBoardModalOpen} = useContext(AppContext);
 
     const [displayedBoards, setDisplayedBoards] = useState(boards);
-    const {isBoardModalOpen, setIsBoardModalOpen} = useContext(AppContext);
 
     const sortBoards = () => {
         if (!boards) return

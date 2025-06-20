@@ -70,4 +70,64 @@ const getCards = async (boardId: number) => {
     }
 };
 
-export { getBoards, createBoard, deleteBoard, getCards };
+const deleteCard = async (boardId:number, cardId: number) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}/cards/${cardId}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return true;
+    } catch (err) {
+        console.error(`Error deleting card ${cardId}: `, err);
+        return null;
+    }
+};
+
+const upvoteCard = async (boardId: number, cardId: number) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}/cards/${cardId}/upvote`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error(`Error upvoting card ${cardId}: `, err);
+        return null;
+    }
+};
+
+
+const createCard = async (boardId: number, cardData: {
+    title: string;
+    description: string;
+    gifUrl: string;
+    owner?: string | null;
+}) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}/cards`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cardData),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error("Error creating card: ", err);
+        return null;
+    }
+};
+
+export { getBoards, createBoard, deleteBoard, getCards, deleteCard, upvoteCard, createCard };
