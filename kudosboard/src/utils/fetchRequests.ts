@@ -103,6 +103,25 @@ const upvoteCard = async (boardId: number, cardId: number) => {
     }
 }
 
+const pinCard = async (boardId: number, cardId: number) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/boards/${boardId}/cards/${cardId}/pin`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (!response.ok) {
+            throw new Error('Network response was not ok')
+        }
+        const data = await response.json()
+        return data
+    } catch (err) {
+        console.error(`Error toggling pin status for card ${cardId}: `, err)
+        return null
+    }
+}
+
 
 const createCard = async (boardId: number, cardData: {
     title: string
@@ -166,4 +185,4 @@ const addComment = async (boardId: number, cardId: number, commentData: {
     }
 };
 
-export { getBoards, createBoard, deleteBoard, getCards, deleteCard, upvoteCard, createCard, getComments, addComment };
+export { getBoards, createBoard, deleteBoard, getCards, deleteCard, upvoteCard, pinCard, createCard, getComments, addComment };
