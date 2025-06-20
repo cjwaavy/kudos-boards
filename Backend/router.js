@@ -156,6 +156,29 @@ const upvoteCard = async (cardId) => {
         return null
     }
 }
+
+const togglePinCard = async (cardId) => {
+    try {
+        // First get the current pin status
+        const currentCard = await prisma.card.findUnique({
+            where: { id: cardId }
+        })
+
+        if (!currentCard) return null
+
+        // Toggle the pin status
+        const card = await prisma.card.update({
+            where: { id: cardId },
+            data: {
+                pinned: !currentCard.pinned
+            }
+        })
+        return card
+    } catch (err) {
+        console.error(`Error toggling pin status for card with id ${cardId}:`, err)
+        return null
+    }
+}
 const getComments = async (cardId) => {
     try {
         const card = await prisma.card.findUnique({
@@ -248,6 +271,20 @@ router.patch('/boards/:boardId/cards/:cardId/upvote', async (req, res, next) => 
     const cardId = parseInt(req.params.cardId)
     if (!Number.isNaN(cardId)) {
         const card = await upvoteCard(cardId)
+        if (card) {
+            return res.status(200).json(card)
+        } else {
+            next(new NotFoundError(`Card with id ${cardId} does not exist`))
+        }
+    } else {
+        next(new ValidationError("Bad Request, cardId must be a number"))
+    }
+})
+
+router.patch('/boards/:boardId/cards/:cardId/pin', async (req, res, next) => {
+    const cardId = parseInt(req.params.cardId)
+    if (!Number.isNaN(cardId)) {
+        const card = await togglePinCard(cardId)
         if (card) {
             return res.status(200).json(card)
         } else {
