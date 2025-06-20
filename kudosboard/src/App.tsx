@@ -1,26 +1,34 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import NavBar from './components/home/NavBar'
 import HomeBoardsContainer from './HomeBoardsContainer'
+import Footer from './components/home/Footer'
 import { AppContext } from './AppContext'
+import { useNavigate } from "react-router";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
-  const [boards, setBoards] = useState()
-  const [filter, setFilter] = useState('')
-
   const root = window.document.documentElement
+
+  const [darkMode, setDarkMode] = useState(root.getAttribute('class') === 'dark')
+  const [boards, setBoards] = useState()
+  const [filter, setFilter] = useState('All')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
+
+
+  let navigate = useNavigate()
 
   useEffect(() => {
     root.setAttribute('class', darkMode ? 'dark' : 'light')
   }, [darkMode])
   return (
-    <AppContext value={{boards, setBoards, darkMode, setDarkMode, filter, setFilter}}>
-      <div>
+    <AppContext value={{ navigate, boards, setBoards, darkMode, setDarkMode, filter, setFilter, searchTerm, setSearchTerm, isBoardModalOpen, setIsBoardModalOpen}}>
+      <div className="flex flex-col min-h-screen">
           <NavBar />
-          <HomeBoardsContainer />
+          <div className="flex-grow">
+            <HomeBoardsContainer />
+          </div>
+          <Footer />
       </div>
     </AppContext>
   )

@@ -1,4 +1,3 @@
-//route planning
 const express = require('express')
 const router = require('./router')
 const cors = require('cors')
@@ -15,6 +14,7 @@ app.use('/api', router)
 
 app.use((err, req, res, next) => {
     console.log("in error middle ware")
+    console.log(err)
     if (err instanceof PrismaClientKnownRequestError){
         console.log("in prisma error")
         if (err.code === 'P2002'){

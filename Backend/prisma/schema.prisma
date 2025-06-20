@@ -37,17 +37,17 @@ model Card {
   owner String?
   pinned Boolean
   comments Comment[]
+  upvotes Int @default(0)
 
   boardId Int
-  board Board @relation(fields: [boardId], references: [id]) // make inherit
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade) // make inherit
 }
 
 model Comment {
   id Int @id @default(autoincrement())
-  author String
-  messageBody String?
-  gifUrl String?
+  author String?
+  messageBody String
 
   cardId Int
-  card Card @relation(fields: [cardId], references: [id])
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
 }
